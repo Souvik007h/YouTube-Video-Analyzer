@@ -1,0 +1,35 @@
+# LangChain and its dependencies
+langchain
+langchain-core
+langchain-community
+langchain_ollama
+langserve
+langchain-google-genai
+
+# Environment and Jupyter
+python-dotenv
+ipykernel
+requests
+
+# Streamlit for web apps
+streamlit
+
+# Vector Database
+chromadb
+langchain-chroma
+
+
+# # Embeddings and Transformers
+# sentence-transformers
+# transformers
+# torch
+# torchvision
+# torchaudio
+
+# Basic Libraries
+numpy
+pandas
+
+# Youtube Document loader
+youtube-transcript-api
+tiktoken
