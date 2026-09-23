@@ -52,13 +52,14 @@ def format_timestamp(seconds: float) -> str:
 
     return f"{minutes}:{seconds:02d}"
 
-def create_timestamp_url(video_id, seconds):
+def create_timestamp_url(video_id: str, seconds: float) -> str:
     """
     Create a YouTube URL that starts at a specific timestamp.
     """
+
     seconds = int(seconds)
 
     return (
-        f"https://www.youtube.com/watch"
-        f"?v={video_id}&t={seconds}s"
+        f"https://www.youtube.com/watch?v={video_id}"
+        f"&t={seconds}s"
     )
