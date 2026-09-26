@@ -5,14 +5,16 @@ langchain-community
 langchain_ollama
 langserve
 langchain-google-genai
+langchain-openai
 
 # Environment and Jupyter
 python-dotenv
 ipykernel
 requests
 
-# Streamlit for web apps
+# Streamlit for web apps 
 streamlit
+
 
 # Vector Database
 chromadb
@@ -33,3 +35,5 @@ pandas
 # Youtube Document loader
 youtube-transcript-api
 tiktoken
+google-api-python-client
+isodate

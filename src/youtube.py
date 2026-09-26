@@ -16,12 +16,21 @@ def extract_video_id(url: str) -> str:
 
 
 def get_transcript(url: str):
-
+    
     video_id = extract_video_id(url)
 
     api = YouTubeTranscriptApi()
 
-    transcript = api.fetch(video_id)
+    try:
+        transcript = api.fetch(
+            video_id,
+            languages=["en"]
+        )
+
+    except Exception as e:
+        raise ValueError(
+            "English transcript is not available for this video."
+        ) from e
 
     results = []
 
@@ -29,9 +38,9 @@ def get_transcript(url: str):
 
         results.append({
             "text": item.text,
-            "start": round(item.start, 3),
-            "duration": round(item.duration, 3),
-            "end": round(item.start + item.duration, 3),
+            "start": item.start,
+            "duration": item.duration,
+            "end": item.start + item.duration,
             "video_id": video_id
         })
 
