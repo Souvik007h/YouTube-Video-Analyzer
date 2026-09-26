@@ -2,3 +2,15 @@ venv/
 .env
 __pycache__/
 data/chroma/
+test_chunk_duplicates.py 
+test_chunker.py 
+test_embedding.py 
+test_model.py 
+test_pipeline.ipynb 
+test_prepare_video.ipynb 
+test_qa_chain.ipynb 
+test_retriver.py 
+test_timestamp_url.py 
+test_vectorstore.py 
+test_youtube_metadata.ipynb 
+test_youtube.py

@@ -113,6 +113,9 @@ if st.button(
 
                 result = prepare_video(
                     url=youtube_url,
+                    provider=provider,
+                    model=model,
+                    api_key=api_key,
                     k=3
                 )
 
@@ -181,3 +184,165 @@ if "video_result" in st.session_state:
     st.info(
         "Video is ready for questions."
     )
+    
+
+# ==================================================
+# CHAT INTERFACE
+# ==================================================
+
+if "video_result" in st.session_state:
+
+    st.divider()
+
+    st.header("💬 Ask Questions")
+
+    # ----------------------------------------------
+    # Initialize UI chat history
+    # ----------------------------------------------
+
+    if "chat_history" not in st.session_state:
+        st.session_state["chat_history"] = []
+
+
+    # ----------------------------------------------
+    # Display previous UI messages
+    # ----------------------------------------------
+
+    for message in st.session_state["chat_history"]:
+
+        if message["role"] == "user":
+
+            with st.chat_message("user"):
+
+                st.markdown(
+                    message["content"]
+                )
+
+        else:
+
+            with st.chat_message("assistant"):
+
+                st.markdown(
+                    message["content"]
+                )
+
+                # Display sources
+                if message.get("sources"):
+
+                    st.markdown(
+                        "**📚 Sources**"
+                    )
+
+                    for i, source in enumerate(
+                        message["sources"]
+                    ):
+
+                        start = source["start_timestamp"]
+                        end = source["end_timestamp"]
+                        source_url = source["url"]
+
+                        st.markdown(
+                            f"**Source {i + 1}** · "
+                            f"🕐 {start} – {end}  \n"
+                            f"[▶ Watch from {start}]"
+                            f"({source_url})"
+                        )
+
+
+    # ----------------------------------------------
+    # Chat input
+    # ----------------------------------------------
+
+    question = st.chat_input(
+        "Ask anything about this video..."
+    )
+
+
+    # ----------------------------------------------
+    # Process new question
+    # ----------------------------------------------
+
+    if question:
+
+        # Show user's question immediately
+        with st.chat_message("user"):
+
+            st.markdown(question)
+
+
+        result = st.session_state["video_result"]
+
+        answer_question = result["answer_question"]
+
+
+        # ------------------------------------------
+        # Generate answer
+        # ------------------------------------------
+
+        with st.chat_message("assistant"):
+
+            with st.spinner(
+                "Searching the video..."
+            ):
+
+                try:
+
+                    qa_result = answer_question(
+                        question
+                    )
+
+                    answer = qa_result["answer"]
+                    sources = qa_result["sources"]
+
+                    st.markdown(answer)
+
+
+                    # ----------------------------------
+                    # Sources
+                    # ----------------------------------
+
+                    st.markdown(
+                        "**📚 Sources**"
+                    )
+
+                    for i, source in enumerate(
+                        sources
+                    ):
+
+                        start = source["start_timestamp"]
+                        end = source["end_timestamp"]
+                        source_url = source["url"]
+
+                        st.markdown(
+                            f"**Source {i + 1}** · "
+                            f"🕐 {start} – {end}  \n"
+                            f"[▶ Watch from {start}]"
+                            f"({source_url})"
+                        )
+
+
+                    # ----------------------------------
+                    # Store ONLY for UI display
+                    # ----------------------------------
+
+                    st.session_state[
+                        "chat_history"
+                    ].append({
+                        "role": "user",
+                        "content": question
+                    })
+
+                    st.session_state[
+                        "chat_history"
+                    ].append({
+                        "role": "assistant",
+                        "content": answer,
+                        "sources": sources
+                    })
+
+
+                except Exception as e:
+
+                    st.error(
+                        f"Something went wrong: {str(e)}"
+                    )
