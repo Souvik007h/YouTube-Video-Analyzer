@@ -33,7 +33,8 @@ Users can:
 ## 🖥️ Working Prototype
 
 <p align="center">
-  <img src="assets/demo.png" alt="YouTube Video Analyzer Prototype" width="900"/>
+  <img src="src/assets/demo1.png" alt="Analyze Video's Metadata and Transcript" width="900"/>
+  <img src="src/assets/demo2.png" alt="RAG Based Question Answering" width="900"/>
 </p>
 
 The prototype provides a Streamlit-based interface for analyzing YouTube videos,
